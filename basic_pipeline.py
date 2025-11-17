@@ -1,5 +1,3 @@
-
-
 from m5.objects import *
 import m5
 import os

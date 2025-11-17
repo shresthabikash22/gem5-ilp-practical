@@ -2,3 +2,8 @@ gem5-env/
 m5out/
 hello
 workload
+trace_bp_on.out
+trace_no_bp.out
+trace_super.out
+trace_single.out
+trace_smt.out

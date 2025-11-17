@@ -1,15 +1,13 @@
 #!/usr/bin/env python3
 """
-viz_pipeline_enhanced.py – With mnemonics, branch highlighting, clean colors
+viz_pipeline_enhanced.py With mnemonics, branch highlighting, clean colors
 """
 import re
 import matplotlib.pyplot as plt
 import numpy as np
 import os
 
-# ----------------------------------------------------------------------
 # CONFIG
-# ----------------------------------------------------------------------
 TRACE_FILE = "m5out/trace.out"
 IMG_FILE   = "screenshots/pipeline1.png"
 MAX_INSTS  = 30
@@ -23,9 +21,7 @@ STAGE_IDX = {s: i for i, s in enumerate(STAGES)}
 STAGE_RE = re.compile(r'O3PipeView:([a-z]+):(\d+)')
 FETCH_RE = re.compile(r'O3PipeView:fetch:\d+:0x([0-9a-f]+):.*:(\d+):\s*(.*?)(?:\s*:\s*|$)')
 
-# ----------------------------------------------------------------------
 # PARSE
-# ----------------------------------------------------------------------
 instructions = []
 current = None
 
@@ -64,9 +60,7 @@ with open(TRACE_FILE, 'r') as f:
 instructions.sort(key=lambda x: x['stages']['fetch'])
 instructions = instructions[:MAX_INSTS]
 
-# ----------------------------------------------------------------------
 # MATRIX
-# ----------------------------------------------------------------------
 n = len(instructions)
 matrix = np.full((n, len(STAGES)), np.nan)
 
@@ -82,9 +76,7 @@ valid_cycles = matrix[~np.isnan(matrix)]
 vmin, vmax = np.min(valid_cycles), np.max(valid_cycles)
 norm = plt.Normalize(vmin, vmax)
 
-# ----------------------------------------------------------------------
 # PLOT
-# ----------------------------------------------------------------------
 fig, ax = plt.subplots(figsize=(15, max(7, n * 0.6)))
 
 im = ax.imshow(matrix, cmap='turbo', norm=norm, aspect='auto', interpolation='none')
